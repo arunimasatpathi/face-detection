@@ -7,20 +7,16 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 
-
 # Load the trained data
 with_mask = np.load('with_mask.npy')
 without_mask = np.load('without_mask.npy')
-
 
 # To reshape the image in 2d
 with_mask = with_mask.reshape(300,50*50*3)
 without_mask = without_mask.reshape(300,50*50*3)
 x = np.r_[with_mask, without_mask] # Combine into 3 columns
-
 labels = np.zeros(x.shape[0])
 labels[200:] = 1.0
-
 names = {0 : 'mask' , 1 : 'no mask'}
 
 # Shuffle data for normal accuracy without overfitting of data
@@ -32,7 +28,6 @@ pca=PCA(n_components=3)
 x_train=pca.fit_transform(x_train)
 svm=SVC()
 svm.fit(x_train,y_train)
-
 haar_data = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 capture = cv2.VideoCapture(0)
 data = []
